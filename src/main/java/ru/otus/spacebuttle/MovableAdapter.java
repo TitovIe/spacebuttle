@@ -1,11 +1,10 @@
 package ru.otus.spacebuttle;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class MovableAdapter implements IMovable {
     private final UObject o;
-
-    public MovableAdapter(UObject o) {
-        this.o = o;
-    }
 
     @Override
     public Vector getPosition() {

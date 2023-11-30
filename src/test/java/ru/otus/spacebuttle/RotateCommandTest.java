@@ -13,13 +13,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class RotateTest {
+class RotateCommandTest {
     @Captor
     ArgumentCaptor<Integer> newDirection;
     @Mock
     private IRotable rotable;
     @InjectMocks
-    private Rotate rotate;
+    private RotateCommand rotateCommand;
 
     @Test
     void execute_should_set_right_direction_when_valid_direction_and_angularVelocity_and_directionsNumber() {
@@ -33,7 +33,7 @@ class RotateTest {
         when(rotable.getDirection()).thenReturn(direction);
         when(rotable.getAngularVelocity()).thenReturn(angularVelocity);
         when(rotable.getDirectionsNumber()).thenReturn(directionsNumber);
-        rotate.Execute();
+        rotateCommand.Execute();
 
         //Then
         verify(rotable, times(1)).setDirection(newDirection.capture());
@@ -44,16 +44,12 @@ class RotateTest {
     void execute_should_throw_exception_when_not_valid_direction() {
         //Given
         Integer direction = null;
-        Integer directionsNumber = 6;
-        Double angularVelocity = 1.2;
 
         //When
         when(rotable.getDirection()).thenReturn(direction);
-        when(rotable.getAngularVelocity()).thenReturn(angularVelocity);
-        when(rotable.getDirectionsNumber()).thenReturn(directionsNumber);
 
         //Then
-        assertThrows(RotateException.class, () -> rotate.Execute());
+        assertThrows(RotateException.class, () -> rotateCommand.Execute());
         verify(rotable, times(0)).setDirection(newDirection.capture());
     }
 
@@ -70,7 +66,7 @@ class RotateTest {
         when(rotable.getDirectionsNumber()).thenReturn(directionsNumber);
 
         //Then
-        assertThrows(RotateException.class, () -> rotate.Execute());
+        assertThrows(RotateException.class, () -> rotateCommand.Execute());
         verify(rotable, times(0)).setDirection(newDirection.capture());
     }
 
@@ -78,16 +74,14 @@ class RotateTest {
     void execute_should_throw_exception_when_not_valid_directionsNumber() {
         //Given
         Integer direction = 5;
-        Integer directionsNumber = 6;
         Double angularVelocity = null;
 
         //When
         when(rotable.getDirection()).thenReturn(direction);
         when(rotable.getAngularVelocity()).thenReturn(angularVelocity);
-        when(rotable.getDirectionsNumber()).thenReturn(directionsNumber);
 
         //Then
-        assertThrows(RotateException.class, () -> rotate.Execute());
+        assertThrows(RotateException.class, () -> rotateCommand.Execute());
         verify(rotable, times(0)).setDirection(newDirection.capture());
     }
 
@@ -105,7 +99,7 @@ class RotateTest {
         doThrow(RuntimeException.class).when(rotable).setDirection(any());
 
         //Then
-        assertThrows(RotateException.class, () -> rotate.Execute());
+        assertThrows(RotateException.class, () -> rotateCommand.Execute());
         verify(rotable, times(1)).setDirection(newDirection.capture());
     }
 }
