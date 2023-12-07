@@ -12,13 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class MoveTest {
+class MoveCommandTest {
     @Captor
     ArgumentCaptor<Vector> vectorArgumentCaptor;
     @Mock
     private IMovable movable;
     @InjectMocks
-    private Move move;
+    private MoveCommand moveCommand;
 
     @Test
     void execute_should_set_right_vector_when_valid_position_and_velocity() {
@@ -30,7 +30,7 @@ class MoveTest {
         //When
         when(movable.getPosition()).thenReturn(position);
         when(movable.getVelocity()).thenReturn(velocity);
-        move.Execute();
+        moveCommand.Execute();
 
         //Then
         verify(movable, times(1)).setPosition(vectorArgumentCaptor.capture());
@@ -48,7 +48,7 @@ class MoveTest {
         when(movable.getVelocity()).thenReturn(velocity);
 
         //Then
-        assertThrows(MoveException.class, () -> move.Execute());
+        assertThrows(MoveException.class, () -> moveCommand.Execute());
         verify(movable, times(0)).setPosition(vectorArgumentCaptor.capture());
     }
 
@@ -63,7 +63,7 @@ class MoveTest {
         when(movable.getVelocity()).thenReturn(velocity);
 
         //Then
-        assertThrows(MoveException.class, () -> move.Execute());
+        assertThrows(MoveException.class, () -> moveCommand.Execute());
         verify(movable, times(0)).setPosition(vectorArgumentCaptor.capture());
     }
 
@@ -79,7 +79,7 @@ class MoveTest {
         doThrow(RuntimeException.class).when(movable).setPosition(any());
 
         //Then
-        assertThrows(MoveException.class, () -> move.Execute());
+        assertThrows(MoveException.class, () -> moveCommand.Execute());
         verify(movable, times(1)).setPosition(vectorArgumentCaptor.capture());
     }
 }
