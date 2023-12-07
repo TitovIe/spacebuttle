@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class MovableAdapter implements IMovable {
-    private final UObject o;
+    protected final UObject o;
 
     @Override
     public Vector getPosition() {
@@ -20,7 +20,7 @@ public class MovableAdapter implements IMovable {
     public Vector getVelocity() {
         int d = (int) o.getProperty("Direction");
         int n = (int) o.getProperty("DirectionsNumber");
-        int v = (int) o.getProperty("Velocity");
+        double v = (double) o.getProperty("Velocity");
         return new Vector(
                 v * Math.cos((double) (d / 360 * n)),
                 v * Math.sin((double) (d / 360 * n)));
