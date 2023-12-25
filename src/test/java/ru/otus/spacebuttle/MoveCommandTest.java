@@ -30,7 +30,7 @@ class MoveCommandTest {
         //When
         when(movable.getPosition()).thenReturn(position);
         when(movable.getVelocity()).thenReturn(velocity);
-        moveCommand.Execute();
+        moveCommand.execute();
 
         //Then
         verify(movable, times(1)).setPosition(vectorArgumentCaptor.capture());
@@ -48,7 +48,7 @@ class MoveCommandTest {
         when(movable.getVelocity()).thenReturn(velocity);
 
         //Then
-        assertThrows(MoveException.class, () -> moveCommand.Execute());
+        assertThrows(MoveException.class, () -> moveCommand.execute());
         verify(movable, times(0)).setPosition(vectorArgumentCaptor.capture());
     }
 
@@ -63,7 +63,7 @@ class MoveCommandTest {
         when(movable.getVelocity()).thenReturn(velocity);
 
         //Then
-        assertThrows(MoveException.class, () -> moveCommand.Execute());
+        assertThrows(MoveException.class, () -> moveCommand.execute());
         verify(movable, times(0)).setPosition(vectorArgumentCaptor.capture());
     }
 
@@ -79,7 +79,7 @@ class MoveCommandTest {
         doThrow(RuntimeException.class).when(movable).setPosition(any());
 
         //Then
-        assertThrows(MoveException.class, () -> moveCommand.Execute());
+        assertThrows(MoveException.class, () -> moveCommand.execute());
         verify(movable, times(1)).setPosition(vectorArgumentCaptor.capture());
     }
 }

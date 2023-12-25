@@ -7,9 +7,9 @@ public class MacroCommand implements ICommand {
     protected final ICommand[] iCommands;
 
     @Override
-    public void Execute() throws Exception {
+    public void execute() throws Exception {
         for (ICommand iCommand : iCommands) {
-            iCommand.Execute();
+            iCommand.execute();
         }
     }
 }

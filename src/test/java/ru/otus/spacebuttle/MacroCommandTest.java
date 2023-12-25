@@ -32,17 +32,17 @@ public class MacroCommandTest {
     void execute_should_check_move_burn() {
         //Given
         //When
-        doNothing().when(checkFuelCommand).Execute();
-        doNothing().when(moveCommand).Execute();
-        doNothing().when(burnFuelCommand).Execute();
-        macroCommand.Execute();
+        doNothing().when(checkFuelCommand).execute();
+        doNothing().when(moveCommand).execute();
+        doNothing().when(burnFuelCommand).execute();
+        macroCommand.execute();
 
         //Then
         InOrder inOrder = inOrder(checkFuelCommand, moveCommand, burnFuelCommand);
 
-        inOrder.verify(checkFuelCommand, times(1)).Execute();
-        inOrder.verify(moveCommand, times(1)).Execute();
-        inOrder.verify(burnFuelCommand, times(1)).Execute();
+        inOrder.verify(checkFuelCommand, times(1)).execute();
+        inOrder.verify(moveCommand, times(1)).execute();
+        inOrder.verify(burnFuelCommand, times(1)).execute();
     }
 
     @SneakyThrows
@@ -50,10 +50,10 @@ public class MacroCommandTest {
     void execute_should_throw_exception_when_thrown_exception() {
         //Given
         //When
-        doThrow(CheckFuelException.class).when(checkFuelCommand).Execute();
+        doThrow(CheckFuelException.class).when(checkFuelCommand).execute();
         //Then
-        assertThrows(CheckFuelException.class, () -> macroCommand.Execute());
-        verify(moveCommand, times(0)).Execute();
-        verify(burnFuelCommand, times(0)).Execute();
+        assertThrows(CheckFuelException.class, () -> macroCommand.execute());
+        verify(moveCommand, times(0)).execute();
+        verify(burnFuelCommand, times(0)).execute();
     }
 }

@@ -68,7 +68,7 @@ class ExceptionHandlerTest {
         ICommand exceptionLogCommand = new ExceptionLogCommand(exception);
 
         //When
-        exceptionLogCommand.Execute();
+        exceptionLogCommand.execute();
 
         //Then
         assertTrue(memoryAppender.contains("Exception was thrown", Level.ERROR));
@@ -81,7 +81,7 @@ class ExceptionHandlerTest {
     void handle_log_should_add_in_queue_when_called() {
         //Given
         //When
-        ExceptionHandler.handle(new NullPointerException(), moveCommand).Execute();
+        ExceptionHandler.handle(new NullPointerException(), moveCommand).execute();
         //Then
         assertEquals(1, blockingQueue.size());
         assertInstanceOf(ExceptionLogCommand.class, blockingQueue.take());
@@ -98,7 +98,7 @@ class ExceptionHandlerTest {
         ICommand exceptionLogRepeatCommand = new RepeatCommand(exceptionLogCommand);
 
         //When
-        exceptionLogRepeatCommand.Execute();
+        exceptionLogRepeatCommand.execute();
 
         //Then
         assertTrue(memoryAppender.contains("Exception was thrown", Level.ERROR));
@@ -112,7 +112,7 @@ class ExceptionHandlerTest {
     void handle_repeat_should_add_in_queue_when_called() {
         //Given
         //When
-        ExceptionHandler.handle(new IllegalArgumentException(), moveCommand).Execute();
+        ExceptionHandler.handle(new IllegalArgumentException(), moveCommand).execute();
 
         //Then
         assertEquals(1, blockingQueue.size());
@@ -133,9 +133,9 @@ class ExceptionHandlerTest {
         while (blockingQueue.size() != 0) {
             ICommand command = blockingQueue.take();
             try {
-                command.Execute();
+                command.execute();
             } catch (Exception exception) {
-                ExceptionHandler.handle(exception, command).Execute();
+                ExceptionHandler.handle(exception, command).execute();
                 i++;
             }
         }
@@ -162,9 +162,9 @@ class ExceptionHandlerTest {
         while (blockingQueue.size() != 0) {
             ICommand command = blockingQueue.take();
             try {
-                command.Execute();
+                command.execute();
             } catch (Exception exception) {
-                ExceptionHandler.handle(exception, command).Execute();
+                ExceptionHandler.handle(exception, command).execute();
                 i++;
             }
         }

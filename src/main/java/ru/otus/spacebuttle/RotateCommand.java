@@ -7,7 +7,7 @@ public class RotateCommand implements ICommand {
     private final IRotable rotable;
 
     @Override
-    public void Execute() {
+    public void execute() {
         try {
             rotable.setDirection((int) ((rotable.getDirection() + rotable.getAngularVelocity()) % rotable.getDirectionsNumber()));
         } catch (Exception e) {

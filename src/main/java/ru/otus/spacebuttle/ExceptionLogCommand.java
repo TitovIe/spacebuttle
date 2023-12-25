@@ -13,7 +13,7 @@ public class ExceptionLogCommand implements ICommand {
     }
 
     @Override
-    public void Execute() {
+    public void execute() {
         LOGGER.error(MESSAGE, exception);
     }
 }

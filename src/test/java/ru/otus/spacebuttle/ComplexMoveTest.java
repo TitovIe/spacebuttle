@@ -45,7 +45,7 @@ public class ComplexMoveTest {
         when(iBurnable.getBurnVelocity()).thenReturn(initVelocity);
         when(iMovable.getPosition()).thenReturn(position);
         when(iMovable.getVelocity()).thenReturn(velocity);
-        macroCommand.Execute();
+        macroCommand.execute();
         //Then
         verify(iBurnable, times(2)).getFuel();
         verify(iBurnable, times(2)).getBurnVelocity();
