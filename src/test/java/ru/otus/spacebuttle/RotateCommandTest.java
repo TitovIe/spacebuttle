@@ -33,7 +33,7 @@ class RotateCommandTest {
         when(rotable.getDirection()).thenReturn(direction);
         when(rotable.getAngularVelocity()).thenReturn(angularVelocity);
         when(rotable.getDirectionsNumber()).thenReturn(directionsNumber);
-        rotateCommand.Execute();
+        rotateCommand.execute();
 
         //Then
         verify(rotable, times(1)).setDirection(newDirection.capture());
@@ -49,7 +49,7 @@ class RotateCommandTest {
         when(rotable.getDirection()).thenReturn(direction);
 
         //Then
-        assertThrows(RotateException.class, () -> rotateCommand.Execute());
+        assertThrows(RotateException.class, () -> rotateCommand.execute());
         verify(rotable, times(0)).setDirection(newDirection.capture());
     }
 
@@ -66,7 +66,7 @@ class RotateCommandTest {
         when(rotable.getDirectionsNumber()).thenReturn(directionsNumber);
 
         //Then
-        assertThrows(RotateException.class, () -> rotateCommand.Execute());
+        assertThrows(RotateException.class, () -> rotateCommand.execute());
         verify(rotable, times(0)).setDirection(newDirection.capture());
     }
 
@@ -81,7 +81,7 @@ class RotateCommandTest {
         when(rotable.getAngularVelocity()).thenReturn(angularVelocity);
 
         //Then
-        assertThrows(RotateException.class, () -> rotateCommand.Execute());
+        assertThrows(RotateException.class, () -> rotateCommand.execute());
         verify(rotable, times(0)).setDirection(newDirection.capture());
     }
 
@@ -99,7 +99,7 @@ class RotateCommandTest {
         doThrow(RuntimeException.class).when(rotable).setDirection(any());
 
         //Then
-        assertThrows(RotateException.class, () -> rotateCommand.Execute());
+        assertThrows(RotateException.class, () -> rotateCommand.execute());
         verify(rotable, times(1)).setDirection(newDirection.capture());
     }
 }

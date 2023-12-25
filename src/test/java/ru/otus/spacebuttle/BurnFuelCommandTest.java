@@ -32,7 +32,7 @@ public class BurnFuelCommandTest {
         //When
         when(iBurnable.getFuel()).thenReturn(fuel);
         when(iBurnable.getBurnVelocity()).thenReturn(velocity);
-        burnFuelCommand.Execute();
+        burnFuelCommand.execute();
 
         //Then
         verify(iBurnable, times(1)).setFuel(fuelResult.capture());
@@ -49,7 +49,7 @@ public class BurnFuelCommandTest {
         doThrow(new RuntimeException()).when(iBurnable).getFuel();
 
         //Then
-        assertThrows(BurnFuelException.class, () -> burnFuelCommand.Execute());
+        assertThrows(BurnFuelException.class, () -> burnFuelCommand.execute());
         verify(iBurnable, times(1)).getFuel();
         verify(iBurnable, times(0)).getBurnVelocity();
     }

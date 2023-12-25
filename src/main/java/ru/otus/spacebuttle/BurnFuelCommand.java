@@ -7,7 +7,7 @@ public class BurnFuelCommand implements ICommand {
     private final IBurnable iBurnable;
 
     @Override
-    public void Execute() throws Exception {
+    public void execute() throws Exception {
         Double fuel;
         Double velocity;
         try {
