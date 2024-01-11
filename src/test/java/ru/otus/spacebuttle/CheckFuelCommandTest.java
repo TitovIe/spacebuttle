@@ -27,7 +27,7 @@ public class CheckFuelCommandTest {
         //When
         when(iBurnable.getFuel()).thenReturn(fuel);
         when(iBurnable.getBurnVelocity()).thenReturn(velocity);
-        checkFuelCommand.Execute();
+        checkFuelCommand.execute();
 
         //Then
         verify(iBurnable, times(1)).getFuel();
@@ -46,7 +46,7 @@ public class CheckFuelCommandTest {
         when(iBurnable.getBurnVelocity()).thenReturn(velocity);
 
         //Then
-        assertThrows(CheckFuelException.class, () -> checkFuelCommand.Execute());
+        assertThrows(CheckFuelException.class, () -> checkFuelCommand.execute());
         verify(iBurnable, times(1)).getFuel();
         verify(iBurnable, times(1)).getBurnVelocity();
     }
@@ -59,7 +59,7 @@ public class CheckFuelCommandTest {
         when(iBurnable.getFuel()).thenThrow(new RuntimeException());
 
         //Then
-        assertThrows(CheckFuelException.class, () -> checkFuelCommand.Execute());
+        assertThrows(CheckFuelException.class, () -> checkFuelCommand.execute());
         verify(iBurnable, times(1)).getFuel();
         verify(iBurnable, times(0)).getBurnVelocity();
     }

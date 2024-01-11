@@ -7,7 +7,7 @@ public class RepeatDoubleCommand implements ICommand {
     private final ICommand command;
 
     @Override
-    public void Execute() throws Exception {
-        command.Execute();
+    public void execute() throws Exception {
+        command.execute();
     }
 }

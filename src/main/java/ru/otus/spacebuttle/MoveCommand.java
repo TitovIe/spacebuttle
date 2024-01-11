@@ -7,7 +7,7 @@ public class MoveCommand implements ICommand {
     private final IMovable movable;
 
     @Override
-    public void Execute() {
+    public void execute() {
         try {
             movable.setPosition(Vector.plus(
                     movable.getPosition(),
