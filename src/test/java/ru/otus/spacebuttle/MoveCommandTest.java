@@ -1,5 +1,6 @@
 package ru.otus.spacebuttle;
 
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -20,6 +21,7 @@ class MoveCommandTest {
     @InjectMocks
     private MoveCommand moveCommand;
 
+    @SneakyThrows
     @Test
     void execute_should_set_right_vector_when_valid_position_and_velocity() {
         //Given
@@ -37,6 +39,7 @@ class MoveCommandTest {
         assertEquals(vectorArgumentCaptor.getValue(), result);
     }
 
+    @SneakyThrows
     @Test
     void execute_should_throw_exception_when_not_valid_position() {
         //Given
@@ -52,6 +55,7 @@ class MoveCommandTest {
         verify(movable, times(0)).setPosition(vectorArgumentCaptor.capture());
     }
 
+    @SneakyThrows
     @Test
     void execute_should_throw_exception_when_not_valid_velocity() {
         //Given
@@ -67,6 +71,7 @@ class MoveCommandTest {
         verify(movable, times(0)).setPosition(vectorArgumentCaptor.capture());
     }
 
+    @SneakyThrows
     @Test
     void execute_should_throw_exception_when_not_valid_result() {
         //Given
