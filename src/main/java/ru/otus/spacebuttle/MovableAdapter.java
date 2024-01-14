@@ -12,7 +12,7 @@ public class MovableAdapter implements IMovable {
     }
 
     @Override
-    public void setPosition(Vector newV) {
+    public void setPosition(Vector newV) throws Exception {
         o.setProperty("Position", newV);
     }
 
@@ -25,4 +25,7 @@ public class MovableAdapter implements IMovable {
                 v * Math.cos((double) (d / 360 * n)),
                 v * Math.sin((double) (d / 360 * n)));
     }
+
+    @Override
+    public void finish() throws Exception {}
 }
