@@ -1,7 +1,9 @@
 package ru.otus.spacebuttle;
 
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
+@ToString
 @RequiredArgsConstructor
 public class MovableAdapter implements IMovable {
     protected final UObject o;
