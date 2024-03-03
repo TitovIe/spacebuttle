@@ -3,18 +3,23 @@ package ru.otus.spacebuttle;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.web.socket.WebSocketHttpHeaders;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
-import ru.otus.spacebuttle.dto.SpaceButtleRequest;
+import ru.otus.spacebuttle.dto.*;
 import ru.otus.spacebuttle.generator.GameGenerator;
 import ru.otus.spacebuttle.generator.ObjectGenerator;
 import ru.otus.spacebuttle.generator.OperationGenerator;
@@ -36,6 +41,10 @@ public class WebSocketTest {
     private static final String SEND_PATH = "/spacebuttle/command";
     @LocalServerPort
     private Integer port;
+
+    @Autowired
+    private TestRestTemplate testRestTemplate;
+
     private WebSocketStompClient webSocketStompClient;
 
     @SneakyThrows
@@ -64,7 +73,51 @@ public class WebSocketTest {
             put("DirectionsNumber", 6);
         }}, MovableAdapter.class);
 
-        StompSession session = webSocketStompClient.connectAsync(String.format(WS_PATH, port), new StompSessionHandlerAdapter() {}).get(1, SECONDS);
+        testRestTemplate.postForEntity(
+                String.format("http://localhost:%d/auth/register/user", port),
+                UserDto.builder()
+                        .nickname("ubivator666")
+                        .clientSecret("666")
+                        .build(),
+                String.class
+        );
+
+        testRestTemplate.postForEntity(
+                String.format("http://localhost:%d/auth/register/user", port),
+                UserDto.builder()
+                        .nickname("manipulator777")
+                        .clientSecret("777")
+                        .build(),
+                String.class
+        );
+
+        testRestTemplate.postForEntity(
+                String.format("http://localhost:%d/auth/register/game", port),
+                GameDto.builder()
+                        .nicknames(List.of(
+                                "ubivator666",
+                                "manipulator777"
+                        ))
+                        .build(),
+                Long.class
+        );
+
+        ResponseEntity<TokenResponse> token = testRestTemplate.postForEntity(
+                String.format("http://localhost:%d/auth/token", port),
+                TokenRequest.builder()
+                        .gameId(1L)
+                        .nickname("manipulator777")
+                        .clientSecret("777")
+                        .build(),
+                TokenResponse.class
+        );
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token.getBody().getToken());
+        StompSession session = webSocketStompClient.connectAsync(
+                String.format(WS_PATH, port),
+                new WebSocketHttpHeaders(headers),
+                new StompSessionHandlerAdapter() {}).get(50, SECONDS);
         session.subscribe(SUBSCRIBE_PATH, new StompFrameHandler() {
             @Override
             public Type getPayloadType(StompHeaders headers) {
