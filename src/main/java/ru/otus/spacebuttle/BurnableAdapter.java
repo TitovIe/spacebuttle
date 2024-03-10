@@ -7,16 +7,16 @@ public class BurnableAdapter extends MovableAdapter implements IBurnable {
 
     @Override
     public Double getBurnVelocity() {
-        return (Double) o.getProperty("Velocity");
+        return (Double) uObject.getProperty("Velocity");
     }
 
     @Override
     public Double getFuel() {
-        return (Double) o.getProperty("Fuel");
+        return (Double) uObject.getProperty("Fuel");
     }
 
     @Override
     public void setFuel(Double fuel) {
-        o.setProperty("Fuel", fuel);
+        uObject.setProperty("Fuel", fuel);
     }
 }

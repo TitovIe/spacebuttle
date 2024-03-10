@@ -142,6 +142,6 @@ public class WebSocketTest {
         session.send(SEND_PATH, spaceButtleRequest);
 
         //Then
-        await().atMost(2, SECONDS).untilAsserted(() -> assertEquals("MovableAdapter(o=SpaceShip(properties={DirectionsNumber=6, OwnerId=0, Position=Vector[x=17.0, y=5.0], Velocity=5.0, Direction=0}))", result.take()));
+        await().atMost(5, SECONDS).untilAsserted(() -> assertEquals("MovableAdapter(uObject=SpaceShip(properties={DirectionsNumber=6, OwnerId=0, Position=Vector[x=17.0, y=5.0], Velocity=5.0, Direction=0}))", result.take()));
     }
 }

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.otus.spacebuttle.ExceptionHandler;
-import ru.otus.spacebuttle.InterpretCommand;
+import ru.otus.spacebuttle.InterpretCommandNew;
 import ru.otus.spacebuttle.core.Ioc;
 import ru.otus.spacebuttle.dto.SpaceButtleRequest;
 import ru.otus.spacebuttle.mapper.SpaceButtleRequestMapper;
@@ -17,7 +17,7 @@ public class SpaceButtleServiceImpl implements SpaceButtleService {
 
     @Override
     public Object makeAction(SpaceButtleRequest spaceButtleRequest) {
-        InterpretCommand command = spaceButtleRequestMapper.toInterpretCommand(spaceButtleRequest);
+        InterpretCommandNew command = new InterpretCommandNew(spaceButtleRequestMapper.toCommand(spaceButtleRequest));
         try {
             command.execute();
             Thread.sleep(1000);
